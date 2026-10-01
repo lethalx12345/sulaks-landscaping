@@ -143,7 +143,7 @@ a { color: var(--green-2); }
   display: flex; align-items: center; justify-content: space-between; gap: 24px;
   min-height: var(--header-h);
 }
-.brand { display: flex; align-items: center; gap: 12px; text-decoration: none; color: #fff; min-width: 0; }
+.brand { display: flex; align-items: center; gap: 12px; text-decoration: none; color: #fff; min-width: 0; flex: 1 1 auto; }
 .brand svg { flex: 0 0 auto; }
 /* Emblem mark from the supplied brand lockup. The wordmark and location line
    are set in HTML instead of being baked into the image, so they stay legible
@@ -153,11 +153,42 @@ a { color: var(--green-2); }
   width: auto; height: 46px;
   flex: 0 0 auto;
 }
-.brand-text { display: block; min-width: 0; }
+.brand-text { display: block; flex: 1 1 auto; min-width: 0; overflow: hidden; }
 .brand-name {
   display: block;
   font-family: var(--font-head); font-size: 21px; font-weight: 600; line-height: 1.12;
   white-space: nowrap;
+}
+/* Phones: step the wordmark down until it fits beside the phone button. */
+@media (max-width: 860px) {
+  .brand-name { font-size: 17px; }
+  .brand-eyebrow { font-size: 10px; letter-spacing: 0.14em; }
+}
+@media (max-width: 640px) {
+  .brand-name { font-size: 16px; }
+  .brand-eyebrow { display: none; }
+}
+@media (max-width: 470px) {
+  .brand-name { font-size: 15px; }
+  .brand-logo { height: 34px; }
+  .brand { gap: 8px; }
+}
+@media (max-width: 400px) {
+  .brand-name { font-size: 14px; }
+}
+@media (max-width: 370px) {
+  .brand-name { font-size: 13px; }
+  .header-inner { gap: 8px; }
+  .brand { gap: 7px; }
+  .header-actions { gap: 6px; }
+  .brand-logo { height: 32px; }
+  .nav-toggle { width: 38px; height: 38px; }
+  .header-phone { padding: 8px 10px; font-size: 12px; }
+}
+/* 320px-class screens cannot fit the full wordmark beside the call button
+   without the two touching, so the emblem carries the brand alone there. */
+@media (max-width: 344px) {
+  .brand-text { display: none; }
 }
 .brand-eyebrow {
   display: block;
@@ -188,6 +219,8 @@ a { color: var(--green-2); }
   border-radius: var(--r-sm);
 }
 .header-phone:hover { background: #6f4f1e; border-color: #6f4f1e; }
+/* Short label is phone-only; the full number shows everywhere else. */
+.header-phone .short-number { display: none; }
 
 .nav-toggle {
   display: none;
@@ -221,17 +254,12 @@ a { color: var(--green-2); }
   .header-inner { gap: 10px; }
   .brand { gap: 9px; }
   .header-actions { gap: 8px; }
-  .header-phone { padding: 8px 10px; font-size: 12px; }
+  /* Shorten the phone label so the business name has room beside it. */
+  .header-phone .full-number { display: none; }
+  .header-phone .short-number { display: inline; }
+  .header-phone { padding: 9px 12px; font-size: 13px; white-space: nowrap; }
   .nav-toggle { width: 40px; height: 40px; font-size: 16px; }
-  .brand-logo { height: 40px; }
-  .brand-name { font-size: 18px; }
-  .brand-eyebrow { font-size: 9.5px; letter-spacing: 0.12em; }
-}
-
-/* Below this the phone number and toggle crowd the brand, so drop the
-   location line only. The business name stays visible. */
-@media (max-width: 420px) {
-  .brand-eyebrow { display: none; }
+  .brand-logo { height: 36px; }
 }
 
 /* ============================================================
